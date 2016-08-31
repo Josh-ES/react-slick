@@ -142,7 +142,9 @@ export class InnerSlider extends React.Component {
   }
 
   render() {
-    var className = classnames('slick-initialized', 'slick-slider', this.props.className);
+    var className = classnames('slick-initialized', 'slick-slider', this.props.className, {
+      'slick-vertical': this.props.vertical,
+    });
 
     var trackProps = {
       fade: this.props.fade,
