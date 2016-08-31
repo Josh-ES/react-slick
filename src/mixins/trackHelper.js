@@ -28,13 +28,20 @@ export var getTrackCSS = function(spec) {
 
   var style = {
     opacity: 1,
-    width: trackWidth,
-    WebkitTransform: 'translate3d(' + spec.left + 'px, 0px, 0px)',
-    transform: 'translate3d(' + spec.left + 'px, 0px, 0px)',
+    WebkitTransform: !spec.vertical ? 'translate3d(' + spec.left + 'px, 0px, 0px)' : 'translate3d(0px, ' + spec.left + 'px, 0px)',
+    transform: !spec.vertical ? 'translate3d(' + spec.left + 'px, 0px, 0px)' : 'translate3d(0px, ' + spec.left + 'px, 0px)',
     transition: '',
     WebkitTransition: '',
-    msTransform: 'translateX(' + spec.left + 'px)'
+    msTransform: !spec.vertical ? 'translateX(' + spec.left + 'px)' : 'translateY(' + spec.left + 'px)'
   };
+
+  if (trackWidth) {
+    assign(style, { width: trackWidth });
+  }
+
+  if (trackHeight) {
+    assign(style, { height: trackHeight });
+  }
 
   // Fallback for IE8
   if (!window.addEventListener && window.attachEvent) {
