@@ -164,6 +164,10 @@ const EventHandlers = mixin({
     var minSwipe = this.state.listWidth/this.props.touchThreshold;
     var swipeDirection = this.swipeDirection(touchObject);
 
+    if (this.props.verticalSwiping) {
+      minSwipe = this.state.listHeight/this.props.touchThreshold;
+    }
+
     // reset the state of touch related state variables.
     this.setState({
       dragging: false,
