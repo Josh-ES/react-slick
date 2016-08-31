@@ -64,7 +64,7 @@ var helpers = mixin({
       this.setState({trackStyle: trackStyle});
     });
   },
-  getWidthgetWidth(elem) {
+  getWidth(elem) {
     return elem.getBoundingClientRect().width || elem.offsetWidth;
   },
   adaptHeight() {
