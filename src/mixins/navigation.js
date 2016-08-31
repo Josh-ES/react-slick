@@ -60,7 +60,7 @@ const navigation = mixin({
       const slides = slickList.querySelectorAll('.slick-slide');
 
       Array.from(slides).every((slide, index) => {
-        if (slide.offsetLeft - centerOffset + (helpers.getWidth(slide) / 2) > this.state.swipeLeft * -1) {
+        if (slide.offsetLeft - centerOffset + (this.getWidth(slide) / 2) > this.state.swipeLeft * -1) {
           swipedSlide = slide;
           return false;
         }
