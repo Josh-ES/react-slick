@@ -220,7 +220,7 @@ export class InnerSlider extends React.Component {
       }
     }
 
-    const listStyle = assign(verticalHeightStyle, centerPaddingStyle);
+    const listStyle = assign({}, verticalHeightStyle, centerPaddingStyle);
 
     return (
       <div className={className} onMouseEnter={this.onInnerSliderEnter} onMouseLeave={this.onInnerSliderLeave}>
