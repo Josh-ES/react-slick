@@ -1,4 +1,6 @@
 'use strict';
+
+import assign from 'object-assign';
 import ReactDOM from 'react-dom';
 
 var checkSpecKeys = function (spec, keysArray) {
