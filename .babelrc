@@ -3,5 +3,5 @@
     "react",
     "es2015-loose"
   ],
-  "plugins": ["transform-object-assign"]
+  "plugins": ["transform-object-assign", "transform-class-properties"]
 }
