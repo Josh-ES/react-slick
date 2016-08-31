@@ -92,6 +92,9 @@ var helpers = mixin({
   getWidth(elem) {
     return elem.getBoundingClientRect().width || elem.offsetWidth;
   },
+  getHeight(elem) {
+    return elem.getBoundingClientRect().height || elem.offsetHeight;
+  },
   adaptHeight() {
     if (this.props.adaptiveHeight) {
       var selector = '[data-index="' + this.state.currentSlide +'"]';
