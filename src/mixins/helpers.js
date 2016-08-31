@@ -49,12 +49,22 @@ var helpers = mixin({
     });
   },
   update(props) {
+    const slickList = ReactDOM.findDOMNode(this.list);
     // This method has mostly same code as initialize method.
     // Refactor it
     var slideCount = React.Children.count(props.children);
     var listWidth = this.getWidth(ReactDOM.findDOMNode(this.list));
     var trackWidth = this.getWidth(ReactDOM.findDOMNode(this.track));
-    var slideWidth = this.getWidth(ReactDOM.findDOMNode(this))/props.slidesToShow;
+    var slideWidth;
+
+    if (!props.vertical) {
+      slideWidth = trackWidth/props.slidesToShow;
+    } else {
+      slideWidth = trackWidth;
+    }
+
+    const slideHeight = this.getHeight(slickList.querySelector('[data-index="0"]'));
+    const listHeight = slideHeight * props.slidesToShow;
 
     // pause slider if autoplay is set to false
     if(!props.autoplay)
@@ -64,7 +74,9 @@ var helpers = mixin({
       slideCount: slideCount,
       slideWidth: slideWidth,
       listWidth: listWidth,
-      trackWidth: trackWidth
+      trackWidth: trackWidth,
+      slideHeight,
+      listHeight,
     }, function () {
 
       var targetLeft = getTrackLeft(assign({
