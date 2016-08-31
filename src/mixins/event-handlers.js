@@ -160,13 +160,31 @@ const EventHandlers = mixin({
     }
     if (touchObject.swipeLength > minSwipe) {
       e.preventDefault();
-      if (swipeDirection === 'left') {
-        this.slideHandler(this.state.currentSlide + this.props.slidesToScroll);
-      } else if (swipeDirection === 'right') {
-        this.slideHandler(this.state.currentSlide - this.props.slidesToScroll);
-      } else {
-        this.slideHandler(this.state.currentSlide);
+
+      let slideCount, newSlide;
+
+      switch (swipeDirection) {
+
+        case 'left':
+        case 'down':
+          newSlide = this.state.currentSlide + this.getSlideCount();
+          slideCount = this.props.swipeToSlide ? this.checkNavigable(newSlide) : newSlide;
+          this.state.currentDirection = 0;
+          break;
+
+        case 'right':
+        case 'up':
+          newSlide = this.state.currentSlide - this.getSlideCount();
+          slideCount = this.props.swipeToSlide ? this.checkNavigable(newSlide) : newSlide;
+          this.state.currentDirection = 1;
+          break;
+
+        default:
+          slideCount = this.state.currentSlide;
+
       }
+
+      this.slideHandler(slideCount);
     } else {
       // Adjust the track back to it's original position.
       var currentLeft = getTrackLeft(assign({
