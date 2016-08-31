@@ -1,6 +1,7 @@
 'use strict';
 
 import mixin from '../utils/mixin';
+import ReactDOM from 'react-dom';
 
 const navigation = mixin({
   getNavigableIndexes() {
