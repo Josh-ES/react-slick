@@ -47,6 +47,33 @@ const navigation = mixin({
 
     return index;
   },
+
+  getSlideCount() {
+    const centerOffset = this.props.centerMode ? this.state.slideWidth * Math.floor(this.props.slidesToShow / 2) : 0;
+
+    if (this.props.swipeToSlide) {
+      let swipedSlide;
+
+      const slickList = ReactDOM.findDOMNode(this.list);
+
+      const slides = slickList.querySelectorAll('.slick-slide');
+
+      Array.from(slides).every((slide, index) => {
+        if (slide.offsetLeft - centerOffset + (helpers.getWidth(slide) / 2) > this.state.swipeLeft * -1) {
+          swipedSlide = slide;
+          return false;
+        }
+
+        return true;
+      });
+
+      const slidesTraversed = Math.abs(swipedSlide.dataset.index - this.state.currentSlide) || 1;
+
+      return slidesTraversed;
+    } else {
+      return this.props.slidesToScroll;
+    }
+  },
 });
 
 export default navigation;
