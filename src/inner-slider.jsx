@@ -37,6 +37,7 @@ export class InnerSlider extends React.Component {
     this.keyHandler = this.keyHandler.bind(this);
     this.onInnerSliderEnter = this.onInnerSliderEnter.bind(this);
     this.onInnerSliderLeave = this.onInnerSliderLeave.bind(this);
+    this.onWindowResized = this.onWindowResized.bind(this);
     this.selectHandler = this.selectHandler.bind(this);
     this.swipeEnd = this.swipeEnd.bind(this);
     this.swipeMove = this.swipeMove.bind(this);
