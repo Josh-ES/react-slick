@@ -5,7 +5,9 @@
   "main": "./lib",
   "scripts": {
     "start": "gulp server",
-    "prepublish": "babel ./src --out-dir ./lib && gulp dist",
+    "build": "babel ./src --out-dir ./lib",
+    "build:watch": "babel --watch ./src --out-dir ./lib",
+    "prepublish": "npm run build && gulp dist",
     "test": "karma start --single-run",
     "dev-test": "karma start"
   },
@@ -25,7 +27,7 @@
   ],
   "devDependencies": {
     "autoprefixer-core": "^6.0.1",
-    "babel-cli": "^6.10.1",
+    "babel-cli": "^6.14.0",
     "babel-core": "^6.9.0",
     "babel-eslint": "^6.0.4",
     "babel-loader": "^6.2.4",
