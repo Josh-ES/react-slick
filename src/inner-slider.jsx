@@ -3,6 +3,7 @@
 import React from 'react';
 import EventHandlers from './mixins/event-handlers';
 import Helpers from './mixins/helpers';
+import Navigation from './mixins/navigation';
 import initialState from './initial-state';
 import defaultProps from './default-props';
 import classnames from 'classnames';
@@ -14,6 +15,7 @@ import {PrevArrow, NextArrow} from './arrows';
 
 @EventHandlers
 @Helpers
+@Navigation
 export class InnerSlider extends React.Component {
   static defaultProps = defaultProps;
 
