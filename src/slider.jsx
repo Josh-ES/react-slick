@@ -4,21 +4,22 @@ import React from 'react';
 import {InnerSlider} from './inner-slider';
 import assign from 'object-assign';
 import json2mq from 'json2mq';
-import ResponsiveMixin from 'react-responsive-mixin';
 import defaultProps from './default-props';
+import Responsive from './mixins/responsive';
 
-var Slider = React.createClass({
-  mixins: [ResponsiveMixin],
-  innerSlider: null,
-  innerSliderRefHandler: function (ref) {
-    this.innerSlider = ref;
-  },
-  getInitialState: function () {
-    return {
-      breakpoint: null
-    };
-  },
-  componentWillMount: function () {
+@Responsive
+export class Slider extends React.Component {
+  innerSlider = null;
+
+  state = {
+    breakpoint: null
+  };
+
+  refHandlers = {
+    innerSlider: ref => this.innerSlider = ref,
+  };
+
+  componentWillMount() {
     if (this.props.responsive) {
       var breakpoints = this.props.responsive.map(breakpt => breakpt.breakpoint);
       breakpoints.sort((x, y) => x - y);
@@ -42,21 +43,21 @@ var Slider = React.createClass({
         this.setState({breakpoint: null});
       });
     }
-  },
+  }
 
-  slickPrev: function () {
+  slickPrev() {
     this.innerSlider.slickPrev();
-  },
+  }
 
-  slickNext: function () {
+  slickNext() {
     this.innerSlider.slickNext();
-  },
+  }
 
-  slickGoTo: function (slide) {
+  slickGoTo(slide) {
     this.innerSlider.slickGoTo(slide)
-  },
+  }
 
-  render: function () {
+  render() {
     var settings;
     var newProps;
     if (this.state.breakpoint) {
@@ -83,12 +84,12 @@ var Slider = React.createClass({
       );
     } else {
       return (
-        <InnerSlider ref={this.innerSliderRefHandler} {...settings}>
+        <InnerSlider ref={this.refHandlers.innerSlider} {...settings}>
           {children}
         </InnerSlider>
       );
     }
   }
-});
+};
 
-module.exports = Slider;
+export default Slider;

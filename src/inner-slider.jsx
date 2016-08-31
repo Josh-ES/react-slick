@@ -1,35 +1,36 @@
 'use strict';
 
 import React from 'react';
-import EventHandlersMixin from './mixins/event-handlers';
-import HelpersMixin from './mixins/helpers';
+import EventHandlers from './mixins/event-handlers';
+import Helpers from './mixins/helpers';
 import initialState from './initial-state';
 import defaultProps from './default-props';
 import classnames from 'classnames';
+import assign from 'object-assign';
 
 import {Track} from './track';
 import {Dots} from './dots';
 import {PrevArrow, NextArrow} from './arrows';
 
-export var InnerSlider = React.createClass({
-  mixins: [HelpersMixin, EventHandlersMixin],
-  list: null,
-  track: null,
-  listRefHandler: function (ref) {
-    this.list = ref;
-  },
-  trackRefHandler: function (ref) {
-    this.track = ref;
-  },
-  getInitialState: function () {
-    return Object.assign({}, initialState, {
-      currentSlide: this.props.initialSlide
-    });
-  },
-  getDefaultProps: function () {
-    return defaultProps;
-  },
-  componentWillMount: function () {
+@EventHandlers
+@Helpers
+export class InnerSlider extends React.Component {
+  static defaultProps = defaultProps;
+
+  list = null;
+
+  state = assign({}, initialState, {
+    currentSlide: this.props.initialSlide
+  });
+
+  track = null;
+
+  refHandlers = {
+    list: ref => this.list = ref,
+    track: ref => this.track = ref,
+  };
+
+  componentWillMount() {
     if (this.props.init) {
       this.props.init();
     }
@@ -48,8 +49,9 @@ export var InnerSlider = React.createClass({
         lazyLoadedList: lazyLoadedList
       });
     }
-  },
-  componentDidMount: function componentDidMount() {
+  }
+
+  componentDidMount() {
     // Hack for autoplay -- Inspect Later
     this.initialize(this.props);
     this.adaptHeight();
@@ -58,8 +60,9 @@ export var InnerSlider = React.createClass({
     } else {
       window.attachEvent('onresize', this.onWindowResized);
     }
-  },
-  componentWillUnmount: function componentWillUnmount() {
+  }
+
+  componentWillUnmount() {
     if (this.animationEndCallback) {
       clearTimeout(this.animationEndCallback);
     }
@@ -71,11 +74,13 @@ export var InnerSlider = React.createClass({
     if (this.state.autoPlayTimer) {
       window.clearInterval(this.state.autoPlayTimer);
     }
-  },
-  componentWillReceiveProps: function(nextProps) {
+  }
+
+  componentWillReceiveProps(nextProps) {
     if (this.props.slickGoTo != nextProps.slickGoTo) {
       if (process.env.NODE_ENV !== 'production') {
-        console.warn('react-slick deprecation warning: slickGoTo prop is deprecated and it will be removed in next release. Use slickGoTo method instead')
+        console.warn('react-slick deprecation warning: slickGoTo prop is' +
+          ' deprecated and it will be removed in next release. Use slickGoTo method instead')
       }
       this.changeSlide({
           message: 'index',
@@ -92,31 +97,37 @@ export var InnerSlider = React.createClass({
     } else {
       this.update(nextProps);
     }
-  },
-  componentDidUpdate: function () {
+  }
+
+  componentDidUpdate() {
     this.adaptHeight();
-  },
-  onWindowResized: function () {
+  }
+
+  onWindowResized() {
     this.update(this.props);
     // animating state should be cleared while resizing, otherwise autoplay stops working
     this.setState({
       animating: false
     })
-  },
-  slickPrev: function () {
+  }
+
+  slickPrev() {
     this.changeSlide({message: 'previous'});
-  },
-  slickNext: function () {
+  }
+
+  slickNext() {
     this.changeSlide({message: 'next'});
-  },
-  slickGoTo: function (slide) {
+  }
+
+  slickGoTo(slide) {
     typeof slide === 'number' && this.changeSlide({
       message: 'index',
       index: slide,
       currentSlide: this.state.currentSlide
     });
-  },
-  render: function () {
+  }
+
+  render() {
     var className = classnames('slick-initialized', 'slick-slider', this.props.className);
 
     var trackProps = {
@@ -191,7 +202,7 @@ export var InnerSlider = React.createClass({
       <div className={className} onMouseEnter={this.onInnerSliderEnter} onMouseLeave={this.onInnerSliderLeave}>
         {prevArrow}
         <div
-          ref={this.listRefHandler}
+          ref={this.refHandlers.list}
           className="slick-list"
           style={centerPaddingStyle}
           onMouseDown={this.swipeStart}
@@ -203,7 +214,7 @@ export var InnerSlider = React.createClass({
           onTouchEnd={this.swipeEnd}
           onTouchCancel={this.state.dragging ? this.swipeEnd: null}
           onKeyDown={this.props.accessibility ? this.keyHandler : null}>
-          <Track ref={this.trackRefHandler} {...trackProps}>
+          <Track ref={this.refHandlers.track} {...trackProps}>
             {this.props.children}
           </Track>
         </div>
@@ -212,4 +223,6 @@ export var InnerSlider = React.createClass({
       </div>
     );
   }
-});
+};
+
+export default InnerSlider;
