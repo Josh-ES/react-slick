@@ -1,12 +1,13 @@
 'use strict';
 
+import mixin from '../utils/mixin';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {getTrackCSS, getTrackLeft, getTrackAnimateCSS} from './trackHelper';
 import assign from 'object-assign';
 
-var helpers = {
-  initialize: function (props) {
+var helpers = mixin({
+  initialize(props) {
     var slideCount = React.Children.count(props.children);
     var listWidth = this.getWidth(ReactDOM.findDOMNode(this.list));
     var trackWidth = this.getWidth(ReactDOM.findDOMNode(this.track));
@@ -34,7 +35,7 @@ var helpers = {
       this.autoPlay(); // once we're set up, trigger the initial autoplay.
     });
   },
-  update: function (props) {
+  update(props) {
     // This method has mostly same code as initialize method.
     // Refactor it
     var slideCount = React.Children.count(props.children);
@@ -63,10 +64,10 @@ var helpers = {
       this.setState({trackStyle: trackStyle});
     });
   },
-  getWidth: function getWidth(elem) {
+  getWidthgetWidth(elem) {
     return elem.getBoundingClientRect().width || elem.offsetWidth;
   },
-  adaptHeight: function () {
+  adaptHeight() {
     if (this.props.adaptiveHeight) {
       var selector = '[data-index="' + this.state.currentSlide +'"]';
       if (this.list) {
@@ -75,7 +76,7 @@ var helpers = {
       }
     }
   },
-  slideHandler: function (index) {
+  slideHandler(index) {
     // Functionality of animateSlide and postSlide is merged into this function
     // console.log('slideHandler', index);
     var targetSlide, currentSlide;
@@ -240,7 +241,7 @@ var helpers = {
 
     this.autoPlay();
   },
-  swipeDirection: function (touchObject) {
+  swipeDirection(touchObject) {
     var xDist, yDist, r, swipeAngle;
 
     xDist = touchObject.startX - touchObject.curX;
@@ -260,7 +261,7 @@ var helpers = {
 
     return 'vertical';
   },
-  autoPlay: function () {
+  autoPlay() {
     if (this.state.autoPlayTimer) {
       return;
     }
@@ -278,7 +279,7 @@ var helpers = {
       });
     }
   },
-  pause: function () {
+  pause() {
     if (this.state.autoPlayTimer) {
       window.clearInterval(this.state.autoPlayTimer);
       this.setState({
@@ -286,6 +287,6 @@ var helpers = {
       });
     }
   }
-};
+});
 
 export default helpers;

@@ -1,11 +1,12 @@
 'use strict';
+
+import mixin from '../utils/mixin';
 import {getTrackCSS, getTrackLeft, getTrackAnimateCSS} from './trackHelper';
-import helpers from './helpers';
 import assign from 'object-assign';
 
-var EventHandlers = {
+const EventHandlers = mixin({
   // Event handler for previous and next
-  changeSlide: function (options) {
+  changeSlide(options) {
     var indexOffset, previousInt, slideOffset, unevenOffset, targetSlide;
     const {slidesToScroll, slidesToShow} = this.props
     const {slideCount, currentSlide} = this.state
@@ -42,7 +43,7 @@ var EventHandlers = {
   },
  
   // Accessiblity handler for previous and next
-  keyHandler: function (e) {
+  keyHandler(e) {
     //Dont slide if the cursor is inside the form fields and arrow keys are pressed
     if(!e.target.tagName.match('TEXTAREA|INPUT|SELECT')) {
         if (e.keyCode === 37 && this.props.accessibility === true) {
@@ -57,10 +58,10 @@ var EventHandlers = {
     }
   },
   // Focus on selecting a slide (click handler on track)
-  selectHandler: function (options) {
+  selectHandler(options) {
     this.changeSlide(options)
   },
-  swipeStart: function (e) {
+  swipeStart(e) {
     var touches, posX, posY;
 
     if ((this.props.swipe === false) || ('ontouchend' in document && this.props.swipe === false)) {
@@ -80,7 +81,7 @@ var EventHandlers = {
       }
     });
   },
-  swipeMove: function (e) {
+  swipeMove(e) {
     if (!this.state.dragging) {
       e.preventDefault();
       return;
@@ -136,7 +137,7 @@ var EventHandlers = {
       e.preventDefault();
     }
   },
-  swipeEnd: function (e) {
+  swipeEnd(e) {
     if (!this.state.dragging) {
       e.preventDefault();
       return;
@@ -178,16 +179,16 @@ var EventHandlers = {
       });
     }
   },
-  onInnerSliderEnter: function (e) {
+  onInnerSliderEnter(e) {
     if (this.props.autoplay && this.props.pauseOnHover) {
       this.pause();
     }
   },
-  onInnerSliderLeave: function (e) {
+  onInnerSliderLeave(e) {
     if (this.props.autoplay && this.props.pauseOnHover) {
       this.autoPlay();
     }
   }
-};
+});
 
 export default EventHandlers;
