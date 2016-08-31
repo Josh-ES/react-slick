@@ -30,6 +30,19 @@ export class InnerSlider extends React.Component {
     track: ref => this.track = ref,
   };
 
+  constructor(props, context) {
+    super(props, context);
+    // bind all event handling methods to this
+    this.changeSlide = this.changeSlide.bind(this);
+    this.keyHandler = this.keyHandler.bind(this);
+    this.onInnerSliderEnter = this.onInnerSliderEnter.bind(this);
+    this.onInnerSliderLeave = this.onInnerSliderLeave.bind(this);
+    this.selectHandler = this.selectHandler.bind(this);
+    this.swipeEnd = this.swipeEnd.bind(this);
+    this.swipeMove = this.swipeMove.bind(this);
+    this.swipeStart = this.swipeStart.bind(this);
+  }
+
   componentWillMount() {
     if (this.props.init) {
       this.props.init();
