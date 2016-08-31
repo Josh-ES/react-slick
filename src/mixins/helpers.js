@@ -286,6 +286,13 @@ var helpers = mixin({
     if ((swipeAngle >= 135) && (swipeAngle <= 225)) {
         return (this.props.rtl === false ? 'right' : 'left');
     }
+    if (this.props.verticalSwiping === true) {
+      if ((swipeAngle >= 35) && (swipeAngle <= 135)) {
+        return 'down';
+      } else {
+        return 'up';
+      }
+    }
 
     return 'vertical';
   },
