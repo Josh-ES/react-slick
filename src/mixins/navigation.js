@@ -27,6 +27,26 @@ const navigation = mixin({
 
     return indexes;
   },
+
+  checkNavigable(index) {
+    const navigables = this.getNavigableIndexes();
+    let prevNavigable = 0;
+
+    if (index > navigables[navigables.length - 1]) {
+      index = navigables[navigables.length - 1];
+    } else {
+      for (var n in navigables) {
+        if (index < navigables[n]) {
+          index = prevNavigable;
+          break;
+        }
+
+        prevNavigable = navigables[n];
+      }
+    }
+
+    return index;
+  },
 });
 
 export default navigation;
