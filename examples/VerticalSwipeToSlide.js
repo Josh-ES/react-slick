@@ -20,7 +20,7 @@ export default class VerticalSwipeToSlide extends Component {
     };
     return (
       <div>
-        <h2>Vertical Mode</h2>
+        <h2>Vertical Mode with Swipe To Slide</h2>
         <Slider {...settings}>
           <div><h3>1</h3></div>
           <div><h3>2</h3></div>
