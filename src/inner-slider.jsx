@@ -180,7 +180,7 @@ export class InnerSlider extends React.Component {
       dots = (<Dots {...dotProps} />);
     }
 
-    var prevArrow, nextArrow;
+    var prevArrow, nextArrow, verticalHeightStyle;
 
     var arrowProps = {
       infinite: this.props.infinite,
@@ -196,6 +196,12 @@ export class InnerSlider extends React.Component {
     if (this.props.arrows) {
       prevArrow = (<PrevArrow {...arrowProps} />);
       nextArrow = (<NextArrow {...arrowProps} />);
+    }
+
+    if (this.props.vertical) {
+      verticalHeightStyle = {
+        height: this.state.listHeight,
+      };
     }
 
     var centerPaddingStyle = null;
@@ -214,13 +220,15 @@ export class InnerSlider extends React.Component {
       }
     }
 
+    const listStyle = assign(verticalHeightStyle, centerPaddingStyle);
+
     return (
       <div className={className} onMouseEnter={this.onInnerSliderEnter} onMouseLeave={this.onInnerSliderLeave}>
         {prevArrow}
         <div
           ref={this.refHandlers.list}
           className="slick-list"
-          style={centerPaddingStyle}
+          style={listStyle}
           onMouseDown={this.swipeStart}
           onMouseMove={this.state.dragging ? this.swipeMove: null}
           onMouseUp={this.swipeEnd}
